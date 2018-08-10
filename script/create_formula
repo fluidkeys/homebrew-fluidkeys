@@ -38,6 +38,13 @@ create_formula_for_release() {
   mv "${TEMP_FILE_NAME}" "${FORMULA_FILE_NAME}"
 }
 
+exit_if_nothing_changed() {
+  if git diff-files --quiet ; then
+    echo "Nothing has changed, nothing to do."
+    exit 0
+  fi
+}
+
 commit_the_formula() {
   SUMMARY_FILE=$(mktemp)
 
@@ -66,6 +73,7 @@ print_tag_and_version
 set_tarball_url
 set_tarball_sha256
 create_formula_for_release
+exit_if_nothing_changed
 commit_the_formula
 set_github_remote_with_token
 push_to_github
