@@ -39,7 +39,7 @@ create_formula_for_release() {
 }
 
 exit_if_nothing_changed() {
-  if git diff-files --quiet ; then
+  if git diff --quiet ; then
     echo "Nothing has changed, nothing to do."
     exit 0
   fi
