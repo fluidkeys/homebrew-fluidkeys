@@ -1,0 +1,71 @@
+#!/bin/sh -eux
+
+GIT_COMMITTER_NAME="Fluidkeys Jenkins Bot"
+GIT_COMMITTER_EMAIL="hello@fluidkeys.com"
+GITHUB_USERNAME="fluidkeys-bot"
+TMP_REPO_DIR="$(mktemp -d)"
+
+print_tag_and_version() {
+  echo "Tag ${TAG}"
+  echo "Version ${VERSION}"
+}
+
+set_tarball_url() {
+  TARBALL_URL="https://github.com/fluidkeys/fluidkeys-cli/archive/${TAG}.tar.gz"
+  # ESCAPED_TARBALL_URL="${TARBALL_URL//\//\\/}"
+}
+
+set_tarball_sha256() {
+  TEMP_TARBALL_FILE=$(mktemp)
+  curl --fail -L -o ${TEMP_TARBALL_FILE} "${TARBALL_URL}"
+  if ! tar -tf ${TEMP_TARBALL_FILE}; then
+    echo "ERROR: 💥 Broken tar.gz file: ${TEMP_TARBALL_FILE}"
+    exit 1
+  fi
+  TARBALL_SHA256=$(shasum -a 256 ${TEMP_TARBALL_FILE} | cut -d' ' -f1)
+}
+
+create_formula_for_release() {
+  FORMULA_FILE_NAME='Formula/fluidkeys.rb'
+  TEMPLATE_FILE_NAME='fluidkeys-formula-template.rb'
+  TEMP_FILE_NAME=$(mktemp)
+  cp "${TEMPLATE_FILE_NAME}" "${TEMP_FILE_NAME}"
+  sed -i.bak "s|{{tarball_url}}|${TARBALL_URL}|g" "${TEMP_FILE_NAME}"
+  sed -i.bak "s|{{version}}|${VERSION}|g" "${TEMP_FILE_NAME}"
+  sed -i.bak "s|{{tarball_sha256}}|${TARBALL_SHA256}|g" "${TEMP_FILE_NAME}"
+
+
+  mv "${TEMP_FILE_NAME}" "${FORMULA_FILE_NAME}"
+}
+
+commit_the_formula() {
+  SUMMARY_FILE=$(mktemp)
+
+  git checkout master
+  git add "${FORMULA_FILE_NAME}"
+
+  echo "Update formula for version ${VERSION}" > $SUMMARY_FILE
+  echo >> $SUMMARY_FILE
+
+  HOME="" git commit \
+      --file ${SUMMARY_FILE} \
+      --author "${GIT_COMMITTER_NAME} <${GIT_COMMITTER_EMAIL}>"
+
+  rm $SUMMARY_FILE
+}
+
+set_github_remote_with_token() {
+  git remote add github_token https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/fluidkeys/homebrew-tap.git
+}
+
+push_to_github() {
+  git push github_token master:master
+}
+
+print_tag_and_version
+set_tarball_url
+set_tarball_sha256
+create_formula_for_release
+commit_the_formula
+set_github_remote_with_token
+push_to_github
