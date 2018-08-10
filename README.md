@@ -1,14 +1,6 @@
 # Fluidkeys homebrew tap
 
-This is a [homebrew tap](#) for installing [Fluidkeys](https://github.com/fluidkeys/fluidkeys) on macOS.
-
-## Install Fluidkeys with Homebrew
-
-```
-brew tap fluidkeys/tap
-brew update
-brew install fluidkeys
-```
+This is a [homebrew tap](#) for [installing Fluidkeys](https://github.com/fluidkeys/fluidkeys-cli#install-on-macos) on macOS.
 
 ## Development
 
