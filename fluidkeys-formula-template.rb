@@ -5,6 +5,7 @@ class Fluidkeys < Formula
   version "{{version}}"
   sha256 "{{tarball_sha256}}"
   depends_on "go" => :build
+  depends_on "dep" => :build
 
   def install
     system "make", "homebrew_install"
