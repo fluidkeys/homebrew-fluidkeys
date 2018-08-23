@@ -3,7 +3,7 @@ class Fluidkeys < Formula
   homepage "https://www.fluidkeys.com"
   url "https://github.com/fluidkeys/fluidkeys-cli/archive/v0.1.1.tar.gz"
   version "0.1.1"
-  sha256 "dea2f0e4ac3ae142e3a95aff5fb874a3934d087aea5630202eb34188ff6bb3c4"
+  sha256 "bfbb0e0bfe52a6fc20846d003f4c2773d5e32ade159fd8fd90d8a74a56589e98"
   depends_on "go" => :build
 
   def install
