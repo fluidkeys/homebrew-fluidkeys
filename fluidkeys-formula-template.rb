@@ -8,7 +8,7 @@ class Fluidkeys < Formula
   depends_on "dep" => :build
 
   def install
-    system "make", "homebrew_install"
+    system "make", "install"
   end
 
   test do
