@@ -1,5 +1,7 @@
 # Fluidkeys homebrew tap
 
+[![Build Status](https://travis-ci.org/fluidkeys/homebrew-tap.svg?branch=master)](https://travis-ci.org/fluidkeys/homebrew-tap)
+
 This is a [homebrew tap](#) for [installing Fluidkeys](https://github.com/fluidkeys/fluidkeys-cli#install-on-macos) on macOS.
 
 ## Development
