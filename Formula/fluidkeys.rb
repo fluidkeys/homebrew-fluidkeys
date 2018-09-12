@@ -1,9 +1,9 @@
 class Fluidkeys < Formula
   desc "Fluidkeys makes PGP simple"
   homepage "https://www.fluidkeys.com"
-  url "https://github.com/fluidkeys/fluidkeys-cli/archive/v0.1.2.tar.gz"
-  version "0.1.2"
-  sha256 "83566c2bfee2fcc4bfdc4df99ef1e2d432a58329bb00390452ddaa027841142a"
+  url "https://github.com/fluidkeys/fluidkeys-cli/archive/v0.1.4.tar.gz"
+  version "0.1.4"
+  sha256 "5d1a178949a00cae661399a68110fea2832a6c5d0edc5b6b4822be54ed090d1f"
   depends_on "go" => :build
 
   def install
