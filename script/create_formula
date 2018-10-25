@@ -11,7 +11,7 @@ print_tag_and_version() {
 }
 
 set_tarball_url() {
-  TARBALL_URL="https://github.com/fluidkeys/fluidkeys-cli/archive/${TAG}.tar.gz"
+  TARBALL_URL="https://download.fluidkeys.com/source/${TAG}.tar.gz"
   # ESCAPED_TARBALL_URL="${TARBALL_URL//\//\\/}"
 }
 
