@@ -7,7 +7,16 @@ class Fluidkeys < Formula
   depends_on "go" => :build
 
   def install
-    system "make", "install"
+    ENV["GOPATH"] = buildpath/"gopath"
+    dir = buildpath/"gopath/src/github.com/fluidkeys/fluidkeys"
+    dir.install buildpath.children
+
+    cd dir do
+      system "make"
+      bin.install "build/bin/fk"
+
+      prefix.install_metafiles
+    end
   end
 
   test do
