@@ -1,13 +1,22 @@
 class Fluidkeys < Formula
   desc "Fluidkeys makes PGP simple"
   homepage "https://www.fluidkeys.com"
-  url "https://download.fluidkeys.com/source/v0.2.5.tar.gz"
-  version "0.2.5"
-  sha256 "58594e5bb9f2fe184bb113f9e91f7ffc5fc0d87431d49819c6a2cd1e3204a4d4"
+  url "https://download.fluidkeys.com/source/v0.2.6.tar.gz"
+  version "0.2.6"
+  sha256 "e2e6654e25aab5c04cbf7f50b71585f508136115a4a289b91d6a961b1a6914ab"
   depends_on "go" => :build
 
   def install
-    system "make", "install"
+    ENV["GOPATH"] = buildpath/"gopath"
+    dir = buildpath/"gopath/src/github.com/fluidkeys/fluidkeys"
+    dir.install buildpath.children
+
+    cd dir do
+      system "make"
+      bin.install "build/bin/fk"
+
+      prefix.install_metafiles
+    end
   end
 
   test do
